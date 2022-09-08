@@ -10,6 +10,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -45,14 +46,8 @@ use Illuminate\Support\Facades\Route;
 			return view('rtl');
 		})->name('rtl');
 
-		Route::get('user-management', function () {
-			return view('pages/user/index');
-		})->name('user-management');
+		Route::get('user-management',[UserController::class, 'index'])->name('user-management');
 
-
-		Route::get('user-management', function () {
-			return view('pages/user/index');
-		})->name('user-management');
 
 
         Route::prefix('question')->group(function () {
@@ -75,7 +70,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('/createDepartmentSecurity', [DepartmentController::class, 'createDepartmentSecurity'])->name('department.security.create');
 
         Route::prefix('audit')->group(function () {
-            Route::get('/', [AuditController::class, 'index'])->name('department');
+            Route::get('/', [AuditController::class, 'index'])->name('audit.page');
         });
 
         Route::post('/courierSecurity', [DepartmentController::class, 'createCourierSecurity'])->name('create.courier.security');
@@ -129,7 +124,6 @@ use Illuminate\Support\Facades\Route;
 		Route::post('/forgot-password', [ResetController::class, 'sendEmail']);
 		Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
 		Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
-
 	});
 
 	Route::get('/admin/login', function () {
